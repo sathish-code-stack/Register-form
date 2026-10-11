@@ -1,0 +1,56 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="min-h-screen flex items-center justify-center bg-gray-100">
+
+    <div class="w-full max-w-sm bg-white p-8 rounded-xl shadow-lg">
+        <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">
+            Registration Form
+        </h2>
+
+        <form id="registerForm" class="space-y-4">
+
+            <div>
+                <label for="name" class="block text-sm font-medium text-gray-700 mb-1">
+                    Name
+                </label>
+                <input type="text" id="name" placeholder="Enter your name" class="w-full border border-gray-300 rounded-lg p-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <p id="nameError" class="text-red-500 text-sm mt-1"></p>
+            </div>
+
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700 mb-1">
+                    Email
+                </label>
+                <input type="text" id="email" placeholder="Enter your email" class="w-full border border-gray-300 rounded-lg p-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <p id="emailError" class="text-red-500 text-sm mt-1"></p>
+            </div>
+
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-700 mb-1">
+                    Password
+                </label>
+                <input type="password" id="password" placeholder="Enter your password"
+                    class="w-full border border-gray-300 rounded-lg p-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <p id="passwordError" class="text-red-500 text-sm mt-1"></p>
+            </div>
+
+            <button type="submit" disabled id="submitBtn" class="w-full bg-blue-600 text-white py-2.5 rounded-lg font-semibold hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition">
+                Register
+            </button>
+
+            <p id="successMessage" class="text-green-600 text-center text-sm"></p>
+
+        </form>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
