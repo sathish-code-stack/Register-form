@@ -5,46 +5,63 @@ const passwordInput = document.getElementById("password")
 const submitBtn = document.getElementById("submitBtn")
 const form = document.getElementById("registerForm")
 
-let submitted = false
+let nameTimer, emailTimer, passwordTimer
+const email_valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
-function validateForm() {
+function validateName() {
     const name = nameInput.value.trim()
-    const email = emailInput.value.trim()
-    const password = passwordInput.value
-
-    const nameValid = name !== ""
-    const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
-    const passwordValid = password.length >= 6
-
-    if (submitted) {
-        document.getElementById("nameError").textContent=nameValid ? "" : "Name is required"
-        document.getElementById("emailError").textContent =emailValid ? "" : "Enter a valid email address"
-        document.getElementById("passwordError").textContent =passwordValid ? "" : "Password must be at least 6 characters"
-    }
-
-    submitBtn.disabled = !(nameValid && emailValid && passwordValid)
-    return nameValid && emailValid && passwordValid
+    document.getElementById("nameError").textContent = name === "" ? "Name is required" : ""
+    checkForm()
 }
 
-nameInput.addEventListener("input", validateForm)
-emailInput.addEventListener("input", validateForm)
-passwordInput.addEventListener("input", validateForm)
+function validateEmail() {
+    const email = emailInput.value.trim()
+    const pattern = email_valid
+    document.getElementById("emailError").textContent = !pattern.test(email) ? "Enter a valid email address" : ""
+    checkForm()
+}
 
-form.addEventListener("submit", function(event) {
+function validatePassword() {
+    const password = passwordInput.value
+    document.getElementById("passwordError").textContent =password.length < 6 ? "Password must be at least 6 characters" : ""
+    checkForm()
+}
+
+function checkForm() {
+    const nameValid = nameInput.value.trim() !== ""
+    const emailValid = email_valid.test(emailInput.value.trim())
+    const passwordValid = passwordInput.value.length >= 6
+    submitBtn.disabled = !(nameValid && emailValid && passwordValid)
+}
+
+nameInput.addEventListener("input", function () {
+    clearTimeout(nameTimer);
+    nameTimer = setTimeout(validateName, 500)
+})
+emailInput.addEventListener("input", function () {
+    clearTimeout(emailTimer);
+    emailTimer = setTimeout(validateEmail, 500)
+})
+
+passwordInput.addEventListener("input", function () {
+    clearTimeout(passwordTimer);
+    passwordTimer = setTimeout(validatePassword, 500)
+})
+
+form.addEventListener("submit", function (event) {
     event.preventDefault()
+    validateName()
+    validateEmail()
+    validatePassword()
 
-    submitted = true
-
-    if (validateForm()) {
-        document.getElementById("successMessage").textContent = "Registration successful"
+    if (!submitBtn.disabled) {
+        document.getElementById("successMessage").textContent ="Registration successful!"
         form.reset()
-        submitted = false
 
         document.getElementById("nameError").textContent = ""
         document.getElementById("emailError").textContent = ""
         document.getElementById("passwordError").textContent = ""
-         submitBtn.disabled = true;
+        submitBtn.disabled = true
     }
-});
-
-
+})
+submitBtn.disabled = true
